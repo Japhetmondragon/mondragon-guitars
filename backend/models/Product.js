@@ -1,5 +1,11 @@
 import mongoose from 'mongoose'
 
+const optionSchema = new mongoose.Schema({
+  label: { type: String, required: true }, // e.g. "Frets"
+  type: { type: String, enum: ['button', 'dropdown'], default: 'button' },
+  choices: [{ type: String }], // e.g. ["21", "22", "24", "Fretless"]
+})
+
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -13,7 +19,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  image: {
+  images: {
     type: String,
     required: true,
   },
@@ -22,6 +28,11 @@ const productSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
+  category: { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category'
+  },
+  options: [optionSchema],
 }, {
   timestamps: true
 })

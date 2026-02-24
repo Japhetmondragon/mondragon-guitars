@@ -3,16 +3,29 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import authRoutes from './routes/authRoutes.js'
+import categoryRoutes from './routes/categoryRoutes.js'
+import adminProductRoutes from './routes/adminProductRoutes.js'
+import { fileURLToPath } from 'url'
+import path from 'path'
 
 dotenv.config()
 
 const app = express()
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+app.use('/api/products', adminProductRoutes)
+app.use('/api/auth', authRoutes)
+app.use('/api/categories', categoryRoutes)
+a
 
 app.use(cors({
   origin: 'http://localhost:5174' // admin frontend will run on different port
 }))
 app.use(express.json())
 app.use('/api/auth', authRoutes)
+app.use('/api/categories', categoryRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Admin MongoDB connected'))
