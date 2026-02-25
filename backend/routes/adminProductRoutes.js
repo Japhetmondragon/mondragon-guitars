@@ -36,6 +36,11 @@ router.get('/', protect, adminOnly, async (req, res) => {
   }
 })
 
+// UPLOAD image
+router.post('/upload', protect, adminOnly, upload.single('image'), (req, res) => {
+  res.json({ image: `/${req.file.path}` })
+})
+
 // GET products by category
 router.get('/category/:categoryId', protect, adminOnly, async (req, res) => {
   try {
@@ -101,11 +106,6 @@ router.delete('/:id', protect, adminOnly, async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
-})
-
-// UPLOAD image
-router.post('/upload', protect, adminOnly, upload.single('image'), (req, res) => {
-  res.json({ image: `/${req.file.path}` })
 })
 
 export default router

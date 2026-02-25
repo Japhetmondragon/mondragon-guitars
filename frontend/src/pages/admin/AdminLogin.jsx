@@ -16,7 +16,10 @@ const AdminLogin = () => {
     setLoading(true)
     setError('')
     try {
-      const { data } = await adminAPI.post('/auth/login', { email, password })
+      const { data } = await adminAPI.post('/auth/login', { 
+        email: email.toLowerCase().trim(), 
+        password 
+      })
       if (!data.isAdmin) {
         setError('Access denied. Admins only.')
         return
