@@ -4,6 +4,16 @@ import { protect, adminOnly } from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
+// PUBLIC - GET all categories
+router.get('/public', async (req, res) => {
+  try {
+    const categories = await Category.find()
+    res.json(categories)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 // GET all categories
 router.get('/', protect, adminOnly, async (req, res) => {
   try {
