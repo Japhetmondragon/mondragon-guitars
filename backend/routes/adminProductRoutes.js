@@ -65,7 +65,8 @@ router.get('/:id', protect, adminOnly, async (req, res) => {
 // CREATE product
 router.post('/', protect, adminOnly, async (req, res) => {
   try {
-    const { name, description, price, countInStock, category, options, images } = req.body
+    const { name, description, price, countInStock, category, options } = req.body
+    const images = Array.isArray(req.body.images) ? req.body.images : [req.body.images].filter(Boolean)
     const product = await Product.create({ name, description, price, countInStock, category, options, images })
     res.status(201).json(product)
   } catch (err) {
@@ -76,6 +77,7 @@ router.post('/', protect, adminOnly, async (req, res) => {
 // UPDATE product
 router.put('/:id', protect, adminOnly, async (req, res) => {
   try {
+    const images = Array.isArray(req.body.images) ? req.body.images : [req.body.images].filter(Boolean)
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true })
     if (!product) return res.status(404).json({ message: 'Product not found' })
     res.json(product)
