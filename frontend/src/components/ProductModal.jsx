@@ -32,8 +32,7 @@ const ProductModal = ({ onClose, onSave, existing, category }) => {
           const formData = new FormData()
           formData.append('image', file)
           const { data } = await adminAPI.post('/products/upload', formData)
-          const port = import.meta.env.VITE_ADMIN_API.split(':')[2].split('/')[0]
-          return `http://localhost:${port}${data.image}`
+          return `${import.meta.env.VITE_ADMIN_API.replace('/api', '')}${data.image}`
         })
       )
       setImages([...images, ...uploaded])

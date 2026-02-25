@@ -25,7 +25,7 @@ const CategoryModal = ({ onClose, onSave, existing }) => {
     setUploading(true)
     try {
       const { data } = await adminAPI.post('/products/upload', formData)
-      setImage(`http://localhost:${import.meta.env.VITE_ADMIN_API.split(':')[2].split('/')[0]}${data.image}`)
+      setImage(`${import.meta.env.VITE_ADMIN_API.replace('/api', '')}${data.image.replace(/\\/g, '/')}`)
     } catch (err) {
       setError('Image upload failed')
     } finally {
