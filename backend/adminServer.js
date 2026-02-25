@@ -21,7 +21,7 @@ app.use('/api/categories', categoryRoutes)
 a
 
 app.use(cors({
-  origin: 'http://localhost:5174' // admin frontend will run on different port
+  origin: process.env.ADMIN_CLIENT_URL
 }))
 app.use(express.json())
 app.use('/api/auth', authRoutes)
